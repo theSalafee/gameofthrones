@@ -1,44 +1,88 @@
 import { useState } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import Header from "./Header";
 import "./styles.css";
+import Footer from "./Footer";
+import gofImage from "./images/wallpaperflare.com_wallpaper (4).jpg";
+import { API_URL } from "./globals";
 
 function App() {
+  // const apiURL = "https://www.anapioficeandfire.com/api/books?pageSize=30";
+
   const [books, setBooks] = useState(null);
 
   const fetchData = async () => {
-    const response = await axios.get(
-      "https://www.anapioficeandfire.com/api/books?pageSize=30"
-    );
-
-    setBooks(response.data);
+    try {
+      const response = await axios.get(API_URL);
+      setBooks(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
-  // Fetch
-  // const [books, setBooks] = useState(null);
-  const apiURL = "https://www.anapioficeandfire.com/api/books?pageSize=30";
-
-  // function fetchBooks() {
-  //   fetch(apiURL)
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       setBooks(data);
-  //     });
+  // async function fetchData() {
+  //   try {
+  //     const response = await fetch(API_URL);
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setBooks(data);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
   // }
 
   return (
     <div className="App">
-      <h1>Game of Thrones Books</h1>
-      <h2>Fetch a list from an API and display it</h2>
-
-      {/* Fetch data from API */}
+      <Header />
       <div>
+        <div className="game-universe-content">
+          <h2>Explore the World of Game of Thrones</h2>
+          <p>
+            Welcome to the vast and complex world of Game of Thrones, created by
+            George R.R. Martin. In this fictional universe, you'll encounter
+            kingdoms, intrigue, and epic battles for the Iron Throne.
+          </p>
+          <p>
+            On the continent of Westeros, noble houses like Stark, Lannister,
+            Targaryen, and Baratheon vie for power, while the Night's Watch guards
+            the Wall in the North against threats from beyond.
+          </p>
+          <p>
+            Meanwhile, across the Narrow Sea in the continent of Essos, cities like
+            King's Landing, Winterfell, and Braavos are bustling with political
+            intrigue, and the Dothraki roam the vast grasslands.
+          </p>
+          <p>
+            Magic, dragons, White Walkers, and direwolves are just some of the
+            fantastical elements that await you in this epic tale of power and
+            betrayal.
+          </p>
+          <p>
+            So, whether you're a fan of the books or the TV series, or you're new to
+            the world of Game of Thrones, prepare for an unforgettable journey
+            through this rich and captivating universe.
+          </p>
+          <div className="centered-image-container">
+          <img
+          src={gofImage}
+          alt="Game of Thrones"
+          className="game-image"
+        />
+          </div>
+        </div>
+
         <button className="fetch-button" onClick={fetchData}>
           Fetch Data
         </button>
         <br />
+
       </div>
+
 
       {/* Display data from API */}
       <div className="books">
@@ -61,8 +105,11 @@ function App() {
               </div>
             );
           })}
+
       </div>
+      <Footer />
     </div>
+
   );
 }
 
